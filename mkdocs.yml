@@ -1,0 +1,44 @@
+site_name: KiTPlayer SDK Documentation
+repo_url: https://github.com/kitbetter-web/kit-player-sdk-docs.git
+repo_name: KiT Player SDK Docs
+
+theme:
+  name: 'material'
+  logo: 'assets/logo.png'  # docs 폴더 내의 경로
+  palette:
+    scheme: slate
+  features:
+    - content.code.copy
+    - content.code.annotate
+    - navigation.tabs
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/kitbetter-web/kit-player-sdk-docs.git
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/KiTalbum
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/@KiTbetter
+    - icon: fontawesome/brands/instagram
+      link: https://www.instagram.com/kit.better/
+
+markdown_extensions:
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+nav:
+  - 소개:
+    - index.md
+  - iOS:
+    - iOS/tutorial.md
+  - Android:
+    - Android/tutorial.md
