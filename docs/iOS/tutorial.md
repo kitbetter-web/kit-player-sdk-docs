@@ -84,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 === "Circular Layout"
     ```swift
-    import KiTPlayer
+    import KiTPlayerSDK
 
     class ViewController: UIViewController {
         @IBAction func playButtonTapped(_ sender: UIButton) {
@@ -94,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ```
 === "Embeded Layout"
     ```swift
-    import KiTPlayer
+    import KiTPlayerSDK
 
     class ViewController: UIViewController {
         @IBAction func playButtonTapped(_ sender: UIButton) {
@@ -108,7 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 SDK 사용 중 발생할 수 있는 에러를 처리하기 위해 delegate를 등록할 수 있습니다.
 
 ```swift
-import KiTPlayer
+import KiTPlayerSDK
 
 class ViewController: UIViewController {
     override func viewDidLoad() {
