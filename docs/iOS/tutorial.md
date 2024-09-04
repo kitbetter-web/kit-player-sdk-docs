@@ -1,13 +1,13 @@
-# KiTPlayer SDK for iOS
+# KiTplayer SDK for iOS
 
 ## 시작하기
-이 문서는 KiTPlayerSDK 사용하기 위한 기본적인 방법을 안내합니다.
+이 문서는 KiTplayer SDK 사용하기 위한 기본적인 방법을 안내합니다.
 
 ### 요구사항
 - iOS 14.0 이상
 
 ## 설치
-KiTPlayerSDK를 SPM(Swift Package Manager)을 통해 설치할 수 있습니다.
+KiTplayer SDK를 SPM(Swift Package Manager)을 통해 설치할 수 있습니다.
 
 ### Swift Package Manager 설정
 Xcode에서 프로젝트를 열고 File > Swift Packages > Add Package Dependency… 메뉴를 선택합니다.
@@ -23,7 +23,7 @@ https://github.com/muzlive-info/muzlive-kit-player-sdk-ios
 
 ### 1. 앱 프라이버시 설정
 
-KiTPlayer SDK를 사용하기 위해서는 다음의 권한이 필요합니다.
+KiTplayer SDK를 사용하기 위해서는 다음의 권한이 필요합니다.
 
 - `Privacy - Microphone Usage Description`
 - `Privacy - Local Network Usage Description`
@@ -56,7 +56,7 @@ KiTPlayer SDK를 사용하기 위해서는 다음의 권한이 필요합니다.
 
 ### 1. 초기화
 
-KiTPlayer SDK를 사용하기 위해서는 앱이 시작될 때 SDK를 초기화해야 합니다.  
+KiTplayer SDK를 사용하기 위해서는 앱이 시작될 때 SDK를 초기화해야 합니다.
 이 작업은 `AppDelegate`의 `application(_:didFinishLaunchingWithOptions:)` 메서드에서 수행됩니다.
 
 ```swift

@@ -1,6 +1,6 @@
-site_name: KiTPlayer SDK Documentation
+site_name: KiTplayer SDK Documentation
 repo_url: https://github.com/kitbetter-web/kit-player-sdk-docs.git
-repo_name: KiT Player SDK Docs
+repo_name: KiTplayer SDK Docs
 
 theme:
   name: 'material'
