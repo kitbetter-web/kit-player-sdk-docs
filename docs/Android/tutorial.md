@@ -7,7 +7,7 @@
 
 ## __설치하기__
 === "Groovy"
-    ```
+    ```kotlin
     // settings.gradle
 
     dependencyResolutionManagement {
@@ -23,7 +23,7 @@
 
 
 === "Kotlin"
-    ```
+    ```kotlin
     // settings.gradle
 
     dependencyResolutionManagement {
@@ -39,7 +39,7 @@
 KiT Player SDK는 동영상 재생에 Bitmovin 솔루션을 사용합니다.
 root build.gradle에 Bitmovin 의존성을 추가해야 합니다.
 
-```
+```kotlin
 // Project : build.gradle
 
 plugins {
@@ -49,20 +49,20 @@ plugins {
 ```
 
 === "Groovy"
-    ```
+    ```kotlin
     // App : build.gradle
 
     dependencies {
-        implementation "org.bitbucket.muzlivekihno:sdk-android:1.0.0"
+        implementation "com.github.kitbetter-web:sdk-android:1.0.0"
     }
     ```
 
 === "Kotlin"
-    ```
+    ```kotlin
     // App : build.gradle
 
     dependencies {
-        implementation("org.bitbucket.muzlivekihno:sdk-android:1.0.0")
+        implementation("com.github.kitbetter-web:sdk-android:1.0.0")
     }
     ```
 
