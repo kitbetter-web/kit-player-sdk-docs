@@ -42,3 +42,4 @@ nav:
     - iOS/tutorial.md
   - Android:
     - Android/tutorial.md
+    - Android/foreground_permission.md
