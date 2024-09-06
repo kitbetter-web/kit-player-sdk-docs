@@ -19,6 +19,47 @@ https://github.com/muzlive-info/muzlive-kit-player-sdk-ios
 
 [repository](https://github.com/muzlive-info/muzlive-kit-player-sdk-ios)
 
+### CocoaPod 설정
+
+1. Podfile에 패키지 추가
+```sh
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'SampleApp' do
+  ...
+  pod 'kitplayer-sdk'
+  ...
+end
+```
+2. 의존 관계에 있는 라이브러리 추가
+```sh
+source 'https://github.com/bitmovin/cocoapod-specs.git'
+
+target 'SampleApp' do
+  ...
+  pod 'BitmovinPlayer'
+  pod 'BitmovinAnalyticsCollector/Core'
+  pod 'BitmovinAnalyticsCollector/BitmovinPlayer'
+end
+```
+3. `Podfile`
+```sh
+// Podfile
+
+source 'https://github.com/bitmovin/cocoapod-specs.git'
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'Sampletest' do
+  use_frameworks!
+
+  pod 'kitplayer-sdk'
+
+  pod 'BitmovinPlayer'
+  pod 'BitmovinAnalyticsCollector/Core'
+  pod 'BitmovinAnalyticsCollector/BitmovinPlayer'
+end
+```
+
 ## 프로젝트 설정
 
 ### 1. 앱 프라이버시 설정
