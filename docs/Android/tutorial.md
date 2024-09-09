@@ -119,6 +119,9 @@ plugins {
     }
     ```
 
+`initialize()` 작업 내부에는 API 요청도 포함되어 있으므로 몇 초의 딜레이가 있을 수 있습니다.
+`initialize()` 결과 callback을 수신한 뒤에 `start()`를 호출하는 것이 안전합니다.
+
 ## __KiT Player SDK에 진입__
 === "Kotlin"
 
