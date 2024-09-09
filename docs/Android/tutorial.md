@@ -76,20 +76,20 @@ plugins {
         override fun onCreate() {
             super.onCreate()
             
-            val sampleSdkKey = "280a8a4d-a27f-4d01-b031-2a003cc4c039"
-            val sampleSecretKey = "4325349b13f4e91a1e7f561f2d715e51e69330307c6db7a04b1207e9ef9z2357b"
-            val samplePackageName = "your.projects.packagename"
+            val clientId = "your-client-id"
+            val secretKey = "your-secret-key"
+            val packageName = "your.projects.packagename"
             
             SDKInitializer.initialize(
-                sampleSdkKey,
-                sampleSecretKey,
-                samplePackageName,
+                clientId,
+                secretKey,
+                packageName,
                 this@SampleApplication
             ) { success ->
                 // Add action when initialization is successful.
             }
         }
-    }z
+    }
     ```
 
 === "Java"
@@ -102,22 +102,25 @@ plugins {
         public void onCreate() {
             super.onCreate();
 
-            String sdkKey = "280a8a4d-a27f-4d01-b031-2a003cc4c039";
-            String secretKey = "4325349b13f4e91a1e7f561f2d715e51e69330307c6db7a04b1207e9ef9z2357b";
+            String clientId = "your-client-id";
+            String secretKey = "your-secret-key";
             String packageName = "your.projects.packagename";
 
             SDKInitializer.INSTANCE.initialize(
-                    sdkKey, secretKey, packageName, this, new Function1<Boolean, Unit>() {
-                        @Override
-                        public Unit invoke(Boolean aBoolean) {
-                            // Add action when initialization is successful.
-                            return null;
-                        }
+                clientId, secretKey, packageName, this, new Function1<Boolean, Unit>() {
+                    @Override
+                    public Unit invoke(Boolean aBoolean) {
+                        // Add action when initialization is successful.
+                        return null;
                     }
+                }
             );
         }
     }
     ```
+
+`initialize()` 작업 내부에는 API 요청도 포함되어 있으므로 몇 초의 딜레이가 있을 수 있습니다.
+`initialize()` 결과 callback을 수신한 뒤에 `start()`를 호출하는 것이 안전합니다.
 
 ## __KiT Player SDK에 진입__
 === "Kotlin"
@@ -125,12 +128,14 @@ plugins {
     ```kotlin
     // SampleActivity.kt
 
-    SDKInitializer.start(
-        activity = this@SampleActivity,
-        sdkType = SDKType.MODAL  // choose which you want (MODAL, EMBED)
-    ) { errorMsg ->
-        // Add action when the start() call fails.
-        Toast.makeText(this@MainActivity, errorMsg, Toast.LENGTH_SHORT).show()
+    sdkButton.setOnClickListener {
+        SDKInitializer.start(
+            activity = this@SampleActivity,
+            sdkType = SDKType.MODAL  // choose which you want (MODAL, EMBED)
+        ) { errorMsg ->
+            // Add action when the start() call fails.
+            Toast.makeText(this@MainActivity, errorMsg, Toast.LENGTH_SHORT).show()
+        }
     }
     ```
 
@@ -139,17 +144,17 @@ plugins {
     ```java
     // SampleActivity.java
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        SDKInitializer.INSTANCE.start(this, SDKType.EMBED, new Function1<String, Unit>() {
-            @Override
-            public Unit invoke(String errorMsg) {
-                // Add action when the start() call fails.
-                Toast.makeText(SampleActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
-                return null;
-            }
-        });
-    }
+    sdkButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            SDKInitializer.INSTANCE.start(this, SDKType.EMBED, new Function1<String, Unit>() {
+                @Override
+                public Unit invoke(String errorMsg) {
+                    // Add action when the start() call fails.
+                    Toast.makeText(SampleActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
+                    return null;
+                }
+            });
+        }
+    })
     ```
