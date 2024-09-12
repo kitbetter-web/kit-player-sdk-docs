@@ -17,13 +17,11 @@ Xcode에서 프로젝트를 열고 File > Swift Packages > Add Package Dependenc
 https://github.com/muzlive-info/muzlive-kit-player-sdk-ios
 ```
 
-[repository](https://github.com/muzlive-info/muzlive-kit-player-sdk-ios)
-
 ### CocoaPod 설정
 
 1. Podfile에 패키지 추가
-```sh
-source 'https://github.com/CocoaPods/Specs.git'
+```sh title="Podfile"
+source 'https://github.com/kitbetter-web/cocoapod-specs.git'
 
 target 'SampleApp' do
   ...
@@ -31,32 +29,19 @@ target 'SampleApp' do
   ...
 end
 ```
-2. 의존 관계에 있는 라이브러리 추가
-```sh
+
+2. 의존 관계에 있는 라이브러리의 podspec repo 추가
+```sh title="Bitmovin Podspec Repo"
 source 'https://github.com/bitmovin/cocoapod-specs.git'
+```
+```sh title="Podfile"
+source 'https://github.com/bitmovin/cocoapod-specs.git' ✅
+source 'https://github.com/kitbetter-web/cocoapod-specs.git'
 
 target 'SampleApp' do
   ...
-  pod 'BitmovinPlayer'
-  pod 'BitmovinAnalyticsCollector/Core'
-  pod 'BitmovinAnalyticsCollector/BitmovinPlayer'
-end
-```
-3. `Podfile`
-```sh
-// Podfile
-
-source 'https://github.com/bitmovin/cocoapod-specs.git'
-source 'https://github.com/CocoaPods/Specs.git'
-
-target 'Sampletest' do
-  use_frameworks!
-
   pod 'kitplayer-sdk'
-
-  pod 'BitmovinPlayer'
-  pod 'BitmovinAnalyticsCollector/Core'
-  pod 'BitmovinAnalyticsCollector/BitmovinPlayer'
+  ...
 end
 ```
 
@@ -103,14 +88,14 @@ KiTplayer SDK를 사용하기 위해서는 앱이 시작될 때 SDK를 초기화
 ```swift
 import Foundation
 import UIKit
-import KiTPlayerSDK
+import KiTplayerSDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let clientId = "YOUR_KITPLAYER_CLIENT_ID"
         let secretKey = "YOUT_KITPLAYER_SECRET_KEY"
-        KiTPlayer.initialize(with: clientId, secretKey)
+        KiTplayer.initialize(with: clientId, secretKey)
         return true
     }
 }
@@ -125,21 +110,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 === "Circular Layout"
     ```swift
-    import KiTPlayerSDK
+    import KiTplayerSDK
 
     class ViewController: UIViewController {
         @IBAction func playButtonTapped(_ sender: UIButton) {
-            KiTPlayer.shared.start()
+            KiTplayer.shared.start()
         }
     }
     ```
 === "Embeded Layout"
     ```swift
-    import KiTPlayerSDK
+    import KiTplayerSDK
 
     class ViewController: UIViewController {
         @IBAction func playButtonTapped(_ sender: UIButton) {
-            KiTPlayer.shared.start(with: .embeded)
+            KiTplayer.shared.start(with: .embeded)
         }
     }
     ```
@@ -149,18 +134,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 SDK 사용 중 발생할 수 있는 에러를 처리하기 위해 delegate를 등록할 수 있습니다.
 
 ```swift
-import KiTPlayerSDK
+import KiTplayerSDK
 
 class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        KiTPlayer.shared.addListenerDelegate(self)
+        KiTplayer.shared.addListenerDelegate(self)
     }
 }
 
-extension ViewController: KiTPlayerListenerDelegate {
-    func didOccurError(_ errorCode: KiTPlayerSDK.KiTPlayerErrorCode) {
+extension ViewController: KiTplayerListenerDelegate {
+    func didOccurError(_ errorCode: KiTplayerSDK.KiTplayerErrorCode) {
         print(errorCode)
     }
 }
