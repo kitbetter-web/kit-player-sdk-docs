@@ -44,3 +44,4 @@ nav:
   - Android:
     - Android/tutorial.md
     - Android/foreground_permission.md
+    - Android/chromecast.md
