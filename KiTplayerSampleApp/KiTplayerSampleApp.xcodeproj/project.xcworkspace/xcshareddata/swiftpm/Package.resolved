@@ -1,0 +1,42 @@
+{
+  "originHash" : "20ffd815107bc956e4590d21e66dc3a431ef26aae3728f87cc00693127363931",
+  "pins" : [
+    {
+      "identity" : "bitmovin-analytics-collector-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/bitmovin/bitmovin-analytics-collector-ios.git",
+      "state" : {
+        "revision" : "95f50e4d5b13c046b7b42d62e8e07cca91f1f663",
+        "version" : "3.9.0"
+      }
+    },
+    {
+      "identity" : "muzlive-kit-player-sdk-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/muzlive-info/muzlive-kit-player-sdk-ios",
+      "state" : {
+        "revision" : "7174781ae22f8d08ccafda851d7892de48103265",
+        "version" : "1.0.38"
+      }
+    },
+    {
+      "identity" : "player-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/bitmovin/player-ios.git",
+      "state" : {
+        "revision" : "234097dcac911aeaafb93a8b96906495b02f2d53",
+        "version" : "3.79.0"
+      }
+    },
+    {
+      "identity" : "player-ios-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/bitmovin/player-ios-core.git",
+      "state" : {
+        "revision" : "ccf4e887f91996f7b7fee940c07f6137bcfeaf5f",
+        "version" : "3.79.0"
+      }
+    }
+  ],
+  "version" : 3
+}
