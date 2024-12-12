@@ -94,7 +94,7 @@ import KiTplayerSDK
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let clientId = "YOUR_KITPLAYER_CLIENT_ID"
-        let secretKey = "YOUT_KITPLAYER_SECRET_KEY"
+        let secretKey = "YOUR_KITPLAYER_SECRET_KEY"
         KiTplayer.initialize(with: clientId, secretKey)
         return true
     }
