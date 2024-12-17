@@ -80,7 +80,7 @@ plugins {
             val secretKey = "your-secret-key"
             val packageName = "your.projects.packagename"
             
-            SDKInitializer.initialize(
+            KitInitializer.initialize(
                 clientId,
                 secretKey,
                 packageName,
@@ -106,7 +106,7 @@ plugins {
             String secretKey = "your-secret-key";
             String packageName = "your.projects.packagename";
 
-            SDKInitializer.INSTANCE.initialize(
+            KitInitializer.INSTANCE.initialize(
                 clientId, secretKey, packageName, this, new Function1<Boolean, Unit>() {
                     @Override
                     public Unit invoke(Boolean aBoolean) {
@@ -129,13 +129,13 @@ plugins {
     // SampleActivity.kt
 
     sdkButton.setOnClickListener {
-        SDKInitializer.start(
+        KitInitializer.start(
             activity = this@SampleActivity,
-            sdkType = SDKType.MODAL  // choose which you want (MODAL, EMBED)
-        ) { errorMsg ->
-            // Add action when the start() call fails.
-            Toast.makeText(this@MainActivity, errorMsg, Toast.LENGTH_SHORT).show()
-        }
+            sdkType = SDKType.MODAL  // choose which you want (MODAL, EMBED),
+            onStartFailure = { kitError ->
+                Toast.makeText(this@MainActivity, "errorCode : ${kitError.errorCode}, cause : ${kitError.cause}", Toast.LENGTH_SHORT).show()
+            }
+        )
     }
     ```
 
@@ -147,14 +147,28 @@ plugins {
     sdkButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            SDKInitializer.INSTANCE.start(this, SDKType.EMBED, new Function1<String, Unit>() {
-                @Override
-                public Unit invoke(String errorMsg) {
-                    // Add action when the start() call fails.
-                    Toast.makeText(SampleActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
-                    return null;
-                }
-            });
+            KitInitializer.INSTANCE.start(
+                this, 
+                SDKType.EMBED, 
+                new Function1<String, Unit>() {
+                    @Override
+                    public Unit invoke(KitError kitError) {
+                        // Add action when the start() call fails.
+                        Toast.makeText(this, 
+                            "errorCode : " + kitError.getErrorCode() + ", cause : " + kitError.getCause(), 
+                            Toast.LENGTH_SHORT).show();
+                        return null;
+                    }
+                },
+                new Function1<String, Unit>() {
+                    @Override
+                    public Unit invoke(KitError error) {
+                        // Add action when error received.
+                        Log.d("KiT SDK Error", "errorCode : " + error.getErrorCode() + " cause : " + error.getCause());
+                        return null;
+                    }
+                },
+            );
         }
     })
     ```
