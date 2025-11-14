@@ -1,9 +1,9 @@
 # __Android 튜토리얼__
 ## __설치 조건__
 - 최소 설치 가능 안드로이드 SDK Level ≥ 24
-- 권장 Android Gradle Plugin ≥ 7.4.2
-- sourceCompatibility, targetCompatibility ≥ 1.8
-- SDK가 사용하는 Kotlin 버전은 1.8.0입니다. 이보다 낮은 버전을 사용하고 있을 경우 [Gradle dependency resolution](https://docs.gradle.org/current/userguide/dependency_resolution.html)과 관련한 이슈가 발생할 수 있습니다.
+- 권장 Android Gradle Plugin ≥ 8.6.0
+- sourceCompatibility, targetCompatibility ≥ 17
+- SDK가 사용하는 Kotlin 버전은 1.9.0입니다. 이보다 낮은 버전을 사용하고 있을 경우 [Gradle dependency resolution](https://docs.gradle.org/current/userguide/dependency_resolution.html)과 관련한 이슈가 발생할 수 있습니다.
 
 ## __설치하기__
 === "Groovy"
@@ -53,7 +53,7 @@ plugins {
     // App : build.gradle
 
     dependencies {
-        implementation "com.github.kitbetter-web:sdk-android:1.0.0"
+        implementation "com.github.kitbetter-web:sdk-android:0.2.0"
     }
     ```
 
@@ -62,7 +62,7 @@ plugins {
     // App : build.gradle
 
     dependencies {
-        implementation("com.github.kitbetter-web:sdk-android:1.0.0")
+        implementation("com.github.kitbetter-web:sdk-android:0.2.0")
     }
     ```
 
