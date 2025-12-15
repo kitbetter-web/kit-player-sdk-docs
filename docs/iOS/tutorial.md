@@ -14,7 +14,7 @@ Xcode에서 프로젝트를 열고 File > Swift Packages > Add Package Dependenc
 
 아래 주소를 입력 후 `Add Package` 버튼을 눌러서 프로젝트에 추가합니다.
 ```text
-https://github.com/muzlive-info/muzlive-kit-player-sdk-ios
+https://github.com/kitbetter-web/muzlive-kit-player-sdk-ios
 ```
 
 ### CocoaPod 설정
