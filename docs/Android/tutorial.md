@@ -1,92 +1,94 @@
 # __Android 튜토리얼__
+
 ## __설치 조건__
-- 최소 설치 가능 안드로이드 SDK Level ≥ 24
-- 권장 Android Gradle Plugin ≥ 8.6.0
-- sourceCompatibility, targetCompatibility ≥ 17
-- SDK가 사용하는 Kotlin 버전은 1.9.0입니다. 이보다 낮은 버전을 사용하고 있을 경우 [Gradle dependency resolution](https://docs.gradle.org/current/userguide/dependency_resolution.html)과 관련한 이슈가 발생할 수 있습니다.
+
+- Android 7.0 (API Level 24) 이상
+- JVM 11 이상
+- Android Gradle Plugin 8.6.0 이상 권장
+- Kotlin 1.9.22 이상
 
 ## __설치하기__
+
+KiT Player SDK는 동영상 재생에 Bitmovin 솔루션을 사용합니다.
+Bitmovin 저장소를 `settings.gradle`에 추가해야 합니다.
+
 === "Groovy"
-    ```kotlin
+
+    ```groovy
     // settings.gradle
 
     dependencyResolutionManagement {
         repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
         repositories {
+            mavenCentral()
             ...
-            maven { url 'https://jitpack.io' }
-            maven { url = uri("https://artifacts.bitmovin.com/artifactory/public-releases") }
+            maven { url 'https://artifacts.bitmovin.com/artifactory/public-releases' }
         }
     }
     ```
 
-
-
 === "Kotlin"
+
     ```kotlin
-    // settings.gradle
+    // settings.gradle.kts
 
     dependencyResolutionManagement {
         repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
         repositories {
+            mavenCentral()
             ...
-            maven { url = uri("https://jitpack.io") }
             maven(url = "https://artifacts.bitmovin.com/artifactory/public-releases")
         }
     }
     ```
 
-KiT Player SDK는 동영상 재생에 Bitmovin 솔루션을 사용합니다.
-root build.gradle에 Bitmovin 의존성을 추가해야 합니다.
-
-```kotlin
-// Project : build.gradle
-
-plugins {
-    id 'maven-publish'
-}
-
-```
+앱 모듈의 `build.gradle`에 SDK 의존성을 추가합니다.
 
 === "Groovy"
-    ```kotlin
-    // App : build.gradle
+
+    ```groovy
+    // app/build.gradle
 
     dependencies {
-        implementation "com.github.kitbetter-web:sdk-android:0.2.0"
+        implementation "io.github.kitbetter-web:sdk-android:1.0.0"
     }
     ```
 
 === "Kotlin"
+
     ```kotlin
-    // App : build.gradle
+    // app/build.gradle.kts
 
     dependencies {
-        implementation("com.github.kitbetter-web:sdk-android:0.2.0")
+        implementation("io.github.kitbetter-web:sdk-android:1.0.0")
     }
     ```
 
+!!! warning "DataStore 의존성 추가 필수"
+    KiT Player SDK는 내부적으로 `androidx.datastore`를 사용하지만, AAR에는 포함되어 있지 않습니다.
+    앱 모듈의 `build.gradle`에 DataStore 의존성을 **반드시** 추가해야 합니다.
+
+    자세한 내용은 [DataStore 의존성 가이드](datastore.md)를 참고하세요.
+
 ## __Application Context로 KiT Player SDK 초기화__
+
+`initialize()`는 앱 실행 시 한 번만 호출하면 됩니다. `Application` 클래스의 `onCreate()`에서 호출하는 것을 권장합니다.
+
 === "Kotlin"
 
     ```kotlin
     // SampleApplication.kt
 
-    class SampleApplication: Application() {
+    class SampleApplication : Application() {
         override fun onCreate() {
             super.onCreate()
-            
-            val clientId = "your-client-id"
-            val secretKey = "your-secret-key"
-            val packageName = "your.projects.packagename"
-            
+
             KitInitializer.initialize(
-                clientId,
-                secretKey,
-                packageName,
-                this@SampleApplication
+                clientId = "your-client-id",
+                secretKey = "your-secret-key",
+                context = this@SampleApplication
             ) { success ->
-                // Add action when initialization is successful.
+                // 초기화 성공 여부를 수신합니다.
             }
         }
     }
@@ -95,34 +97,39 @@ plugins {
 === "Java"
 
     ```java
-    // SampleApllication.java
+    // SampleApplication.java
 
     public class SampleApplication extends Application {
         @Override
         public void onCreate() {
             super.onCreate();
 
-            String clientId = "your-client-id";
-            String secretKey = "your-secret-key";
-            String packageName = "your.projects.packagename";
-
             KitInitializer.INSTANCE.initialize(
-                clientId, secretKey, packageName, this, new Function1<Boolean, Unit>() {
-                    @Override
-                    public Unit invoke(Boolean aBoolean) {
-                        // Add action when initialization is successful.
-                        return null;
-                    }
-                }
+                "your-client-id",
+                "your-secret-key",
+                this,
+                success -> null
             );
         }
     }
     ```
 
-`initialize()` 작업 내부에는 API 요청도 포함되어 있으므로 몇 초의 딜레이가 있을 수 있습니다.
-`initialize()` 결과 callback을 수신한 뒤에 `start()`를 호출하는 것이 안전합니다.
+`initialize()` 내부에는 API 요청이 포함되어 있으므로 몇 초의 딜레이가 있을 수 있습니다.
+`initialize()` 콜백을 수신한 뒤에 `start()`를 호출하는 것이 안전합니다.
 
 ## __KiT Player SDK에 진입__
+
+### SDKType
+
+`start()` 호출 시 SDK 진입 방식을 선택할 수 있습니다.
+
+| 타입 | 설명 |
+|------|------|
+| `SDKType.MODAL` | 현재 화면 위에 전체 화면으로 SDK를 오버레이합니다. |
+| `SDKType.EMBED` | 현재 화면에서 SDK 화면으로 전환합니다. |
+
+### start()
+
 === "Kotlin"
 
     ```kotlin
@@ -131,9 +138,13 @@ plugins {
     sdkButton.setOnClickListener {
         KitInitializer.start(
             activity = this@SampleActivity,
-            sdkType = SDKType.MODAL  // choose which you want (MODAL, EMBED),
+            userId = "user-id",
+            sdkType = SDKType.MODAL,  // SDKType.MODAL 또는 SDKType.EMBED
             onStartFailure = { kitError ->
-                Toast.makeText(this@MainActivity, "errorCode : ${kitError.errorCode}, cause : ${kitError.cause}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "errorCode : ${kitError.errorCode}", Toast.LENGTH_SHORT).show()
+            },
+            onKitError = { kitError ->
+                Log.d("KiT SDK", "errorCode : ${kitError.errorCode}, cause : ${kitError.cause}")
             }
         )
     }
@@ -144,31 +155,79 @@ plugins {
     ```java
     // SampleActivity.java
 
-    sdkButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            KitInitializer.INSTANCE.start(
-                this, 
-                SDKType.EMBED, 
-                new Function1<String, Unit>() {
-                    @Override
-                    public Unit invoke(KitError kitError) {
-                        // Add action when the start() call fails.
-                        Toast.makeText(this, 
-                            "errorCode : " + kitError.getErrorCode() + ", cause : " + kitError.getCause(), 
-                            Toast.LENGTH_SHORT).show();
-                        return null;
-                    }
-                },
-                new Function1<String, Unit>() {
-                    @Override
-                    public Unit invoke(KitError error) {
-                        // Add action when error received.
-                        Log.d("KiT SDK Error", "errorCode : " + error.getErrorCode() + " cause : " + error.getCause());
-                        return null;
-                    }
-                },
-            );
-        }
-    })
+    sdkButton.setOnClickListener(v -> {
+        KitInitializer.INSTANCE.start(
+            this,
+            "user-id",
+            SDKType.MODAL,
+            kitError -> {
+                Toast.makeText(this,
+                    "errorCode : " + kitError.getErrorCode(),
+                    Toast.LENGTH_SHORT).show();
+                return null;
+            },
+            kitError -> {
+                Log.d("KiT SDK", "errorCode : " + kitError.getErrorCode() + ", cause : " + kitError.getCause());
+                return null;
+            }
+        );
+    });
     ```
+
+| 파라미터 | 타입 | 필수 | 설명 |
+|---------|------|:----:|------|
+| `activity` | `Activity` | ✓ | SDK를 실행할 Activity |
+| `userId` | `String` | ✓ | 사용자 식별자 |
+| `sdkType` | `SDKType` | | 진입 방식 (기본값: `SDKType.EMBED`) |
+| `onStartFailure` | `(KitError) -> Unit` | | 초기화 미완료 시 호출되는 콜백 |
+| `onKitError` | `(KitError) -> Unit` | | SDK 내부 에러 콜백 |
+
+### startWithDynamicLink()
+
+NFC 태그나 딥링크로부터 받은 링크 데이터를 SDK에 전달하여 진입할 때 사용합니다.
+NFC 기능을 사용하지 않는 경우 `start()`를 사용하세요.
+
+=== "Kotlin"
+
+    ```kotlin
+    KitInitializer.startWithDynamicLink(
+        activity = this@SampleActivity,
+        userId = "user-id",
+        sdkType = SDKType.MODAL,
+        dynamicLink = "received-dynamic-link",
+        onStartFailure = { kitError ->
+            Log.e("KiT SDK", "Start failed: ${kitError.errorCode}")
+        },
+        onKitError = { kitError ->
+            Log.d("KiT SDK", "errorCode : ${kitError.errorCode}, cause : ${kitError.cause}")
+        }
+    )
+    ```
+
+=== "Java"
+
+    ```java
+    KitInitializer.INSTANCE.startWithDynamicLink(
+        this,
+        "user-id",
+        SDKType.MODAL,
+        "received-dynamic-link",
+        kitError -> {
+            Log.e("KiT SDK", "Start failed: " + kitError.getErrorCode());
+            return null;
+        },
+        kitError -> {
+            Log.d("KiT SDK", "errorCode : " + kitError.getErrorCode());
+            return null;
+        }
+    );
+    ```
+
+| 파라미터 | 타입 | 필수 | 설명 |
+|---------|------|:----:|------|
+| `activity` | `Activity` | ✓ | SDK를 실행할 Activity |
+| `userId` | `String` | ✓ | 사용자 식별자 |
+| `sdkType` | `SDKType` | | 진입 방식 (기본값: `SDKType.EMBED`) |
+| `dynamicLink` | `String?` | | NFC 태그 또는 딥링크로부터 전달받은 데이터 |
+| `onStartFailure` | `(KitError) -> Unit` | | 초기화 미완료 시 호출되는 콜백 |
+| `onKitError` | `(KitError) -> Unit` | | SDK 내부 에러 콜백 |

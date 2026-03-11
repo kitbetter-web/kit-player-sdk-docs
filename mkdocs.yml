@@ -46,3 +46,5 @@ nav:
     - Android/foreground_permission.md
     - Android/chromecast.md
     - Android/error_code.md
+    - Android/datastore.md
+    - Android/nfc.md
