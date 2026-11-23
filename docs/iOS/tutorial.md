@@ -144,7 +144,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: KiTplayerListenerDelegate {
+extension ViewController: KiTPlayerListenerDelegate {
     func didOccurError(_ errorCode: KiTplayerSDK.KiTplayerErrorCode) {
         print(errorCode)
     }
