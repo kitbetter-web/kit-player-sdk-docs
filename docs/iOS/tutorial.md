@@ -4,7 +4,7 @@
 이 문서는 KiTplayer SDK 사용하기 위한 기본적인 방법을 안내합니다.
 
 ### 요구사항
-- iOS 14.0 이상
+- iOS 15.0 이상
 
 ## 설치
 KiTplayer SDK를 SPM(Swift Package Manager)을 통해 설치할 수 있습니다.
@@ -144,7 +144,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: KiTplayerListenerDelegate {
+extension ViewController: KiTPlayerListenerDelegate {
     func didOccurError(_ errorCode: KiTplayerSDK.KiTplayerErrorCode) {
         print(errorCode)
     }
